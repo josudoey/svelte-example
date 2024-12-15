@@ -2,15 +2,18 @@
   // https://flowbite-svelte.com/docs/components/sidebar
   // https://github.com/shinokada/flowbite-sveltekit-responsive-sidebar-layout
   import {
-    Navbar,
-    NavBrand,
-    NavHamburger,
-    NavUl,
-    NavLi,
     Sidebar,
     SidebarGroup,
     SidebarItem,
     SidebarWrapper,
+    Navbar,
+    NavBrand,
+    NavHamburger,
+    Avatar,
+    Dropdown,
+    DropdownItem,
+    DropdownDivider,
+    Button,
   } from "flowbite-svelte";
   import {
     ChartPieSolid,
@@ -27,26 +30,51 @@
   import { page } from "$app/stores";
 
   let activeUrl = $page.url.pathname;
+  let flowbiteSvelteBaseUrl = $state("https://flowbite-svelte.com/");
 </script>
 
-<Navbar>
-  <NavBrand href="/">
-    <!-- <img
-      src="/images/flowbite-svelte-icon-logo.svg"
-      class="me-3 h-6 sm:h-9"
-      alt="Flowbite Logo"
-    /> -->
-    <span
-      class="self-center whitespace-nowrap text-xl font-semibold dark:text-white"
-      >Example</span
-    >
-  </NavBrand>
-  <NavHamburger />
-  <NavUl>
-    <NavLi href="/">Home</NavLi>
-    <NavLi href="/about">About</NavLi>
-  </NavUl>
+<Navbar class="border-b w-full" fluid="true">
+  <div class="flex">
+    <NavHamburger />
+    <NavBrand href="/">
+      <img
+        src={flowbiteSvelteBaseUrl + "/images/flowbite-svelte-icon-logo.svg"}
+        class="me-3 h-6 sm:h-9"
+        alt="Flowbite Logo"
+      />
+      <span
+        class="self-center whitespace-nowrap text-xl font-semibold dark:text-white"
+        >Example
+      </span>
+    </NavBrand>
+  </div>
+  <!-- <NavUl>
+      <NavLi href="/">Home</NavLi>
+      <NavLi href="/about">About</NavLi>
+    </NavUl> -->
+
+  <Button pill color="light" id="avatar_with_name" class="!p-1">
+    <Avatar
+      src={flowbiteSvelteBaseUrl + "/images/profile-picture-3.webp"}
+      class="me-2"
+    />
+    Bonnie Green
+  </Button>
+  <Dropdown inline triggeredBy="#avatar_with_name">
+    <div slot="header" class="px-4 py-2">
+      <span class="block text-sm text-gray-900 dark:text-white"
+        >Bonnie Green</span
+      >
+      <span class="block truncate text-sm font-medium">name@flowbite.com</span>
+    </div>
+    <DropdownItem>Dashboard</DropdownItem>
+    <DropdownItem>Settings</DropdownItem>
+    <DropdownItem>Earnings</DropdownItem>
+    <DropdownDivider />
+    <DropdownItem slot="footer">Sign out</DropdownItem>
+  </Dropdown>
 </Navbar>
+
 <div class="h-screen flex">
   <Sidebar {activeUrl} class="h-full">
     <SidebarWrapper
